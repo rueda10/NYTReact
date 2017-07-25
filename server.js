@@ -56,13 +56,18 @@ app.post('/api/saved', function(req, res) {
         if (err) {
             throw err;
         }
-        res.send(doc);
+        res.send(doc._id);
     });
 });
 
 // delete saved article from DB
 app.delete('/api/saved', function(req, res) {
-
+    Article.find({ url: req.param('url')}).remove().exec(function(err, data) {
+        if (err) {
+            throw err;
+        }
+        res.send("Deleted");
+    });
 });
 
 // -------------------------------------------------
