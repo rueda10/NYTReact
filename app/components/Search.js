@@ -38,10 +38,8 @@ class Search extends Component {
             this.setState({
                 searchFired: false
             });
-            console.log("UPDATED");
 
             helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear).then((data) => {
-                console.log("ARTICLES", data);
                 if (data !== this.state.results) {
                     this.setState({ results: data });
                 }
@@ -64,54 +62,54 @@ class Search extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <div className="row">
-                    <div className="col-md-2 col-lg-3"></div>
-                    <div className="col-xs-12 col-md-8 col-lg-6">
+                    <div className="col-sm-3"></div>
+                    <div className="col-xs-12 col-sm-6">
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <h3 className="panel-title text-center">Search</h3>
                             </div>
-                            <div className="panel-body text-center">
+                            <div className="panel-body">
                                 <form className="form-horizontal" onSubmit={this.onSearchClick}>
                                     <div className="form-group">
-                                        <label className="col-sm-2 control-label">Topic:</label>
-                                        <div className="col-sm-10">
+                                        <label className="col-xs-4 control-label">Topic:</label>
+                                        <div className="col-xs-8">
                                             <input
                                                 value={this.state.topic}
                                                 type="text"
-                                                className="form-control text-center"
-                                                id="topic"
+                                                className="form-control"
                                                 onChange={this.handleTopicChange}
+                                                placeholder="Search here..."
                                                 required
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label className="col-sm-2 control-label">Start Year:</label>
-                                        <div className="col-sm-10">
+                                        <label className="col-xs-4 control-label">Start Year:</label>
+                                        <div className="col-xs-8">
                                             <input
                                                 value={this.state.startYear}
                                                 type="text"
-                                                className="form-control text-center"
-                                                id="topic"
+                                                className="form-control"
                                                 onChange={this.handleStartYearChange}
+                                                placeholder="YYYY"
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <label className="col-sm-2 control-label">Start Year:</label>
-                                        <div className="col-sm-10">
+                                        <label className="col-xs-4 control-label">End Year:</label>
+                                        <div className="col-xs-8">
                                             <input
                                                 value={this.state.endYear}
                                                 type="text"
-                                                className="form-control text-center"
-                                                id="topic"
+                                                className="form-control"
                                                 onChange={this.handleEndYearChange}
+                                                placeholder="YYYY"
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group text-center">
                                         <button className="btn btn-primary" type="submit">Search</button>
                                     </div>
                                 </form>

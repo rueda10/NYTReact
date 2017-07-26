@@ -3,7 +3,7 @@ import axios from 'axios';
 const NYT_KEY = 'b3b4ba7816ee49c9aeebb09ed6c1ed02';
 
 module.exports = {
-    runQuery: function(topic, startYear, endYear) {
+    runQuery: (topic, startYear, endYear) => {
         var queryURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
         queryURL += '?api-key=' + NYT_KEY + '&q=' + topic;
         if (startYear) {
@@ -21,17 +21,17 @@ module.exports = {
             return [];
         });
     },
-    getArticles: function() {
+    getArticles: () => {
         return axios.get('/api/saved').then(function(results) {
             return results;
         });
     },
-    saveArticle: function(article) {
-        return axios.post('/api/saved', article).then(function(results) {
-            return results._id;
+    saveArticle: (title, snippet, url) => {
+        return axios.post('/api/saved', {title: title, snippet: snippet, url: url}).then(function(results) {
+            return results;
         });
     },
-    deleteArticle: function(article) {
-        return axios.delete('/api/saved', article);
+    deleteArticle: (articleId) => {
+        return axios.delete('/api/saved', { params: { _id: articleId } });
     }
 };

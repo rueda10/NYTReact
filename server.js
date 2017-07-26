@@ -49,10 +49,11 @@ app.get('/api/saved', function(req, res) {
 
 // save article to DB
 app.post('/api/saved', function(req, res) {
-    const article = req.body.title;
+    const title = req.body.title;
+    const snippet = req.body.snippet;
     const url = req.body.url;
 
-    Article.create({ title: title, url: url }, function(err, doc) {
+    Article.create({ title: title, snippet: snippet, url: url }, function(err, doc) {
         if (err) {
             throw err;
         }
@@ -62,11 +63,13 @@ app.post('/api/saved', function(req, res) {
 
 // delete saved article from DB
 app.delete('/api/saved', function(req, res) {
-    Article.find({ url: req.param('url')}).remove().exec(function(err, data) {
+    console.log("DELETE ROUTE", req.query._id);
+
+    Article.find({ _id: req.query._id }).remove().exec(function(err, data) {
         if (err) {
             throw err;
         }
-        res.send("Deleted");
+        res.send("yeap");
     });
 });
 
