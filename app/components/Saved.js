@@ -42,7 +42,7 @@ class Saved extends Component {
                             <p className="list-group-item-text">{article.snippet} <a target="_blank" href={article.url}>[Read More]</a></p>
                         </div>
                         <div className="col-xs-3 col-sm-2 col-md-1">
-                            <button className="btn btn-warning btn-xs pull-right" onClick={() => this.onRemoveClick(article._id)}>Remove</button>
+                            <button className="btn btn-danger btn-xs pull-right" onClick={() => this.onRemoveClick(article._id)}>Remove</button>
                         </div>
                     </div>
                 </li>
