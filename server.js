@@ -41,9 +41,10 @@ db.once("open", function() {
 app.get('/api/saved', function(req, res) {
     Article.find({}).exec(function(err, doc) {
         if (err) {
-            throw err;
+            console.log("[ERROR]", err);
+        } else {
+            res.send(doc);
         }
-        res.send(doc);
     });
 });
 
@@ -55,21 +56,21 @@ app.post('/api/saved', function(req, res) {
 
     Article.create({ title: title, snippet: snippet, url: url }, function(err, doc) {
         if (err) {
-            throw err;
+            console.log("[ERROR]", err);
+        } else {
+            res.send(doc._id);
         }
-        res.send(doc._id);
     });
 });
 
 // delete saved article from DB
 app.delete('/api/saved', function(req, res) {
-    console.log("DELETE ROUTE", req.query._id);
-
     Article.find({ _id: req.query._id }).remove().exec(function(err, data) {
         if (err) {
-            throw err;
+            console.log("[ERROR]", err);
+        } else {
+            res.send("yeap");
         }
-        res.send("yeap");
     });
 });
 
