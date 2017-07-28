@@ -58,7 +58,6 @@ class Saved extends Component {
                 </div>
             )
         }
-        console.log(this.state.savedArticles);
 
         return (
             <div className="container">
