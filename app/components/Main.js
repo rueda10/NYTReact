@@ -7,10 +7,12 @@ class Main extends Component {
 
         // keep track of search results in this component to maintain results up in Results component
         this.state = {
-            searchResults: []
+            searchResults: [],
+            currentSearch: ''
         };
 
         this.setSearchResults = this.setSearchResults.bind(this);
+        this.setCurrentSearch = this.setCurrentSearch.bind(this);
     }
 
     // this method is passed on to children components to maintain search results visible
@@ -20,12 +22,20 @@ class Main extends Component {
         });
     }
 
+    setCurrentSearch(currentSearch) {
+        this.setState({
+            currentSearch: currentSearch
+        });
+    }
+
     render() {
         // Use this to pass props on to this.props.children
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 setSearchResults: this.setSearchResults,
-                searchResults: this.state.searchResults
+                setCurrentSearch: this.setCurrentSearch,
+                searchResults: this.state.searchResults,
+                currentSearch: this.state.currentSearch
             })
         );
 

@@ -10,7 +10,7 @@ class Search extends Component {
         // Initial state. Set the results to whatever the Main component has as results
         this.state = {
             topic: "",
-            currentSearch: "",
+            currentSearch: this.props.currentSearch,
             startYear: "",
             endYear: "",
             searchFired: false,
@@ -26,8 +26,7 @@ class Search extends Component {
     // handles topic input change
     handleTopicChange(event) {
         this.setState({
-            topic: event.target.value,
-            currentSearch: event.target.value
+            topic: event.target.value
         });
     }
 
@@ -69,8 +68,10 @@ class Search extends Component {
     onSearchClick(event) {
         event.preventDefault();
         this.setState({
-            searchFired: true
+            searchFired: true,
+            currentSearch: this.state.topic
         })
+        this.props.setCurrentSearch(this.state.topic);
     }
 
     render() {
