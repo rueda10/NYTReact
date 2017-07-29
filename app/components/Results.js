@@ -12,6 +12,7 @@ class Results extends Component {
         };
     }
 
+    // get saved articles from db when component initially renders
     componentDidMount() {
         helpers.getArticles().then((results) => {
             if (results.data) {
@@ -22,6 +23,7 @@ class Results extends Component {
         });
     }
 
+    // save button click handler. Saves articles to DV and gets the new list of articles from DB
     onSaveClick(title, snippet, url) {
         helpers.saveArticle(title, snippet, url).then(() => {
             helpers.getArticles().then((results) => {
@@ -32,6 +34,7 @@ class Results extends Component {
         });
     }
 
+    // handles remove button click. Removes articles from db and gets new list of articles from DB to render
     onRemoveClick(articleId) {
         helpers.deleteArticle(articleId).then(() => {
             helpers.getArticles().then((results) => {
@@ -43,6 +46,8 @@ class Results extends Component {
     }
 
     renderArticles() {
+        // render all articles from search results. Use the DB articles' ID to determine whether article in
+        // results is saved or not. Render Save or Remove buttons depending on that
         return this.props.results.map((result) => {
             return (
                 <li key={result._id} className="list-group-item">
@@ -70,6 +75,7 @@ class Results extends Component {
     }
 
     render() {
+        // If no results, render empty div
         if (this.props.results.length === 0) {
             return (
                 <div></div>
@@ -79,7 +85,7 @@ class Results extends Component {
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
-                    <h3 className="panel-title text-center">Results</h3>
+                    <h3 className="panel-title text-center">Results for {this.props.currentSearch}</h3>
                 </div>
                 <ul className="list-group">
                     {this.renderArticles()}

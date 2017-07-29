@@ -2,7 +2,33 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 class Main extends Component {
+    constructor(props) {
+        super(props);
+
+        // keep track of search results in this component to maintain results up in Results component
+        this.state = {
+            searchResults: []
+        };
+
+        this.setSearchResults = this.setSearchResults.bind(this);
+    }
+
+    // this method is passed on to children components to maintain search results visible
+    setSearchResults(results) {
+        this.setState({
+            searchResults: results
+        });
+    }
+
     render() {
+        // Use this to pass props on to this.props.children
+        const childrenWithProps = React.Children.map(this.props.children,
+            (child) => React.cloneElement(child, {
+                setSearchResults: this.setSearchResults,
+                searchResults: this.state.searchResults
+            })
+        );
+
         return (
             <div>
                 <nav className="navbar navbar-default">
@@ -18,7 +44,7 @@ class Main extends Component {
                     </div>
                 </nav>
 
-                {this.props.children}
+                {childrenWithProps}
             </div>
         );
     }

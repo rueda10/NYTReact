@@ -7,12 +7,14 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
+        // Initial state. Set the results to whatever the Main component has as results
         this.state = {
             topic: "",
+            currentSearch: "",
             startYear: "",
             endYear: "",
             searchFired: false,
-            results: []
+            results: this.props.searchResults
         }
 
         this.handleTopicChange = this.handleTopicChange.bind(this);
@@ -21,18 +23,26 @@ class Search extends Component {
         this.onSearchClick = this.onSearchClick.bind(this);
     }
 
+    // handles topic input change
     handleTopicChange(event) {
-        this.setState({ topic: event.target.value });
+        this.setState({
+            topic: event.target.value,
+            currentSearch: event.target.value
+        });
     }
 
+    // handles start year change
     handleStartYearChange(event) {
         this.setState({ startYear: event.target.value });
     }
 
+    // handles end year change
     handleEndYearChange(event) {
         this.setState({ endYear: event.target.value });
     }
 
+    // run when component updates and searchFired is true. This will run
+    // the axios get request to get the NYT articles
     componentDidUpdate(prevProps, prevState) {
         if (this.state.searchFired) {
             this.setState({
@@ -42,9 +52,11 @@ class Search extends Component {
             helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear).then((data) => {
                 if (data !== this.state.results) {
                     this.setState({ results: data });
+                    this.props.setSearchResults(data);
                 }
             });
 
+            // reset inputs
             this.setState({
                 topic: "",
                 startYear: "",
@@ -53,6 +65,7 @@ class Search extends Component {
         }
     }
 
+    // handles search button click and sets searchFired to true
     onSearchClick(event) {
         event.preventDefault();
         this.setState({
@@ -117,7 +130,7 @@ class Search extends Component {
                         </div>
                     </div>
                 </div>
-                <Results results={this.state.results} />
+                <Results results={this.state.results} currentSearch={this.state.currentSearch} />
             </div>
         );
     }

@@ -12,6 +12,7 @@ class Saved extends Component {
         };
     }
 
+    // get articles from DB when component initially renders
     componentDidMount() {
         helpers.getArticles().then((results) => {
             this.setState({
@@ -20,6 +21,7 @@ class Saved extends Component {
         });
     }
 
+    // handles remove button click
     onRemoveClick(articleId) {
         helpers.deleteArticle(articleId).then(() => {
             helpers.getArticles().then((results) => {
@@ -30,6 +32,7 @@ class Saved extends Component {
         });
     }
 
+    // Renders saved articles
     renderArticles() {
         return this.state.savedArticles.map((article) => {
             const dateDisplay = new Date(article.date);
@@ -51,6 +54,7 @@ class Saved extends Component {
     }
 
     render() {
+        // If no articles in DB
         if (_.isEmpty(this.state.savedArticles)) {
             return (
                 <div className="container">
