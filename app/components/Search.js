@@ -7,14 +7,12 @@ class Search extends Component {
     constructor(props) {
         super(props);
 
-        // Initial state. Set the results to whatever the Main component has as results
+        // Initial state. Keep track of input text fields and search fired
         this.state = {
             topic: "",
-            currentSearch: this.props.currentSearch,
             startYear: "",
             endYear: "",
             searchFired: false,
-            results: this.props.searchResults
         }
 
         this.handleTopicChange = this.handleTopicChange.bind(this);
@@ -49,8 +47,7 @@ class Search extends Component {
             });
 
             helpers.runQuery(this.state.topic, this.state.startYear, this.state.endYear).then((data) => {
-                if (data !== this.state.results) {
-                    this.setState({ results: data });
+                if (data !== this.props.searchResults) {
                     this.props.setSearchResults(data);
                 }
             });
@@ -69,7 +66,6 @@ class Search extends Component {
         event.preventDefault();
         this.setState({
             searchFired: true,
-            currentSearch: this.state.topic
         })
         this.props.setCurrentSearch(this.state.topic);
     }
@@ -131,7 +127,7 @@ class Search extends Component {
                         </div>
                     </div>
                 </div>
-                <Results results={this.state.results} currentSearch={this.state.currentSearch} />
+                <Results results={this.props.searchResults} currentSearch={this.props.currentSearch} />
             </div>
         );
     }
